@@ -1,13 +1,19 @@
-const lessons = []
+const { User, Lesson } = require('../models');
 
 const resolvers = {
-    lessons: () => {
-        return lessons;
+    users: async () => {
+        return await User.find();
     },
-    createLesson: ({ title, description, audioURL }) => {
-        const lesson = { id: lessons.length + 1, title, description, audioURL };
-        lessons.push(lesson);
-        return lesson;
+    lessons: async () => {
+        return await Lesson.find()
+    },
+    createUser: async ({ name, email, password }) => {
+        const newUser = new User({ name, email, password });
+        return await newUser.save();
+    },
+    createLesson: async ({ title, description, audioURL }) => {
+        const newLesson = new Lesson({ title, description, audioURL });
+        return await newLesson.save;
     }
 }
 
