@@ -3,6 +3,7 @@ const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const schema = require('./graphql/schema');
+const resolvers = require('./resolvers');
 
 dotenv.config();
 const app = express();
