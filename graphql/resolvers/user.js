@@ -1,13 +1,22 @@
 const { User } = require('../../models');
 
 const userResolvers = {
-    users: async () => {
-        return await User.find();
+    Query: {
+        users: async () => {
+            return await User.find();
+        },
     },
-    createUser: async ({ name, email, password }) => {
-        const newUser = new User({ name, email, password });
-        return await newUser.save();
-    },
+    Mutation: {
+        createUser: async ({ name, email, password }) => {
+            try {
+                const newUser = new User({ name, email, password });
+                return await newUser.save();
+            } catch (erro) {
+                console.error("Error creating user:", error);
+                throw new Error("Failed to create user");
+            }
+        },
+    }
 };
 
 module.exports = userResolvers;

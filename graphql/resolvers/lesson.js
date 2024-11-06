@@ -1,13 +1,30 @@
 const { Lesson } = require('../../models');
+const { uploadToS3 } = require('../../utils/awsUploader');
 
 const lessonResolvers = {
-    lessons: async () => {
-        return await Lesson.find()
+    Query: {
+        lessons: async () => {
+            return await Lesson.find();
+        },
     },
-    createLesson: async ({ title, description, audioURL }) => {
-        const newLesson = new Lesson({ title, description, audioURL });
-        return await newLesson.save;
+    Mutation: {
+        createLesson: async ({ title, description, audioURL }) => {
+            try {
+                // const audioURL = await uploadToS3(null);
+                console.log("Attempting to create a new lesson...");
+
+                const newLesson = new Lesson({ title, description, audioURL });
+                const savedLesson = await newLesson.save()
+
+                console.log("Lesson created successfully:", savedLesson);
+
+                return savedLesson;
+            } catch (error) {
+                console.error("Error creating lesson:", error);
+                throw new Error("Failed to create lesson");
+            }
+        }
     }
-}
+};
 
 module.exports = lessonResolvers;

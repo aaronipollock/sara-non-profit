@@ -2,8 +2,14 @@ const userResolvers = require('./user');
 const lessonResolvers = require('./lesson');
 
 const resolvers = {
-    ...userResolvers,
-    ...lessonResolvers,
+    Query: {
+        ...userResolvers.Query,
+        ...lessonResolvers.Query,
+    },
+    Mutation: {
+        ...lessonResolvers.Mutation,
+        ...userResolvers.Mutation,
+    }
 };
 
 module.exports = resolvers;

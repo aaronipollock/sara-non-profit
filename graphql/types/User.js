@@ -1,4 +1,4 @@
-const User =
+const User = `
     type User {
         id: ID!
         name: String!
@@ -6,5 +6,6 @@ const User =
         password: String!
         completedLessons: [ID!]
     }
+`;
 
 module.exports = User;
